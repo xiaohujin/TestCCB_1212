@@ -11,8 +11,12 @@
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include "HelloWorldScene.h"
+#include "cocos-ext.h"
+#include "HelloCocosBuilderLayerLoader.h"
 
 USING_NS_CC;
+USING_NS_CC_EXT;
+
 using namespace CocosDenshion;
 
 AppDelegate::AppDelegate()
@@ -36,12 +40,22 @@ bool AppDelegate::applicationDidFinishLaunching()
     // set FPS. the default value is 1.0/60 if you don't call this
     pDirector->setAnimationInterval(1.0 / 60);
 
-    // create a scene. it's an autorelease object
-    CCScene *pScene = HelloWorld::scene();
+    //
+    CCNodeLoaderLibrary * ccNodeLoaderLibrary = CCNodeLoaderLibrary::newDefaultCCNodeLoaderLibrary();
+    
+    ccNodeLoaderLibrary->registerCCNodeLoader("HelloCocosBuilderLayer", HelloCocosBuilderLayerLoader::loader());
+    
+    /* Create an autorelease CCBReader. */
+    cocos2d::extension::CCBReader * ccbReader = new cocos2d::extension::CCBReader(ccNodeLoaderLibrary);
+    
+    /* Read a ccbi file. */
 
-    // run
-    pDirector->runWithScene(pScene);
-
+    
+    CCScene *scene = ccbReader->createSceneWithNodeGraphFromFile("ccb/HelloCocosBuilder.ccbi");
+    
+    pDirector->runWithScene(scene);
+    
+   
     return true;
 }
 
