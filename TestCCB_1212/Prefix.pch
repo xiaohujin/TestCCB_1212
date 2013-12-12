@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'TestCCB_1212' target in the 'TestCCB_1212' project
+//
+
+#ifdef __OBJC__
+	#import <Foundation/Foundation.h>
+	#import <UIKit/UIKit.h>
+#endif
